@@ -1,0 +1,9 @@
+network.host: 0.0.0.0
+#workers: 24
+http.port: 9200
+discovery:
+  type: single-node
+cluster:
+  name: bank_automation_cluster
+bootstrap:
+  memory_lock: true

@@ -1,0 +1,9 @@
+pipeline:
+  batch:
+    size: 4000
+    delay: 100
+  workers: 16
+config:
+  debug: false
+log:
+  level: error
