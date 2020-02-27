@@ -4,8 +4,8 @@ services:
     build: elastic
     environment:
       - "ES_JAVA_OPTS=-Xms4096m -Xmx32768m"
-      - ELASTICSEARCH_USERNAME
-      - ELASTICSEARCH_PASSWORD
+      # - ELASTICSEARCH_USERNAME
+      # - ELASTICSEARCH_PASSWORD
     ulimits:
       nproc: 65535
       nofile:
@@ -23,9 +23,9 @@ services:
     build: kibana
     depends_on:
       - elasticsearch
-    environment:
-      - ELASTICSEARCH_USERNAME
-      - ELASTICSEARCH_PASSWORD
+    # environment:
+    #   - ELASTICSEARCH_USERNAME
+    #   - ELASTICSEARCH_PASSWORD
     restart: always
   # logstash:
   #   build: logstash
