@@ -4,6 +4,6 @@ pipeline:
     delay: 100
   workers: 16
 config:
-  debug: false
+  debug: true
 log:
   level: error

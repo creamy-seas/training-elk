@@ -1,51 +1,48 @@
 version: '3.4'
 services:
-  elasticsearch:
-    build: elastic
-    environment:
-      - "ES_JAVA_OPTS=-Xms4096m -Xmx32768m"
-      # - ELASTICSEARCH_USERNAME
-      # - ELASTICSEARCH_PASSWORD
-    ulimits:
-      nproc: 65535
-      nofile:
-        soft: 65535
-        hard: 65535
-      memlock:
-        soft: -1
-        hard: -1
-    restart: always
-    # ports:
-    #   - 9200:9200
-    volumes:
-      - /data/elasticsearch:/usr/share/elasticsearch/data
-  kibana:
-    build: kibana
-    depends_on:
-      - elasticsearch
-    # environment:
-    #   - ELASTICSEARCH_USERNAME
-    #   - ELASTICSEARCH_PASSWORD
-    restart: always
+  # elasticsearch:
+  #   build: elastic
+  #   environment:
+  #     - "ES_JAVA_OPTS=-Xms4096m -Xmx32768m"
+  #   ulimits:
+  #     nproc: 65535
+  #     nofile:
+  #       soft: 65535
+  #       hard: 65535
+  #     memlock:
+  #       soft: -1
+  #       hard: -1
+  #   restart: always
+  #   # ports:
+  #   #   - 9200:9200
+  #   volumes:
+  #     - /data/elasticsearch:/usr/share/elasticsearch/data
   logstash:
     build: logstash
-    depends_on:
-      - elasticsearch
+    ports:
+      - 443:9000
+    # depends_on:
+    #   - elasticsearch
     environment:
       - "LS_JAVA_OPTS=-Xms4096m -Xmx32768m"
-      # - ELASTICSEARCH_USERNAME
-      # - ELASTICSEARCH_PASSWORD
     restart: always
-  frontend:
-    build: frontend
-    ports:
-      - 443:443
-    depends_on:
-      - kibana
-    volumes:
-      - /data/certbot/conf:/etc/letsencrypt
-      - /data/certbot/www:/var/www/certbot
-    restart: always
+  # kibana:
+  #   build: kibana
+  #   depends_on:
+  #     - elasticsearch
+  #   ports:
+  #     - 443:5601
+  #   restart: always
+  # frontend:
+  #   build: frontend
+  #   ports:
+  #     - 443:443
+  #   depends_on:
+  #     - kibana
+  #   volumes:
+  #     - /data/certbot/conf:/etc/letsencrypt
+  #     - /data/certbot/www:/var/www/certbot
+  #   restart: always
   # certbot:
   #   image: certbot/certbot
   #   volumes:
