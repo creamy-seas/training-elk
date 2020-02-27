@@ -15,8 +15,8 @@ services:
         soft: -1
         hard: -1
     restart: always
-    ports:
-      - 9200:9200
+    # ports:
+    #   - 9200:9200
     volumes:
       - /data/elasticsearch:/usr/share/elasticsearch/data
   kibana:
@@ -27,19 +27,27 @@ services:
     #   - ELASTICSEARCH_USERNAME
     #   - ELASTICSEARCH_PASSWORD
     restart: always
-  # logstash:
-  #   build: logstash
-  #   depends_on:
-  #     - elasticsearch
-  #   environment:
-  #     - "LS_JAVA_OPTS=-Xms4096m -Xmx32768m"
-  #     - ELASTICSEARCH_USERNAME
-  #     - ELASTICSEARCH_PASSWORD
-  #   restart: always
+  logstash:
+    build: logstash
+    depends_on:
+      - elasticsearch
+    environment:
+      - "LS_JAVA_OPTS=-Xms4096m -Xmx32768m"
+      # - ELASTICSEARCH_USERNAME
+      # - ELASTICSEARCH_PASSWORD
+    restart: always
   frontend:
     build: frontend
     ports:
       - 443:443
     depends_on:
       - kibana
+    volumes:
+      - /data/certbot/conf:/etc/letsencrypt
+      - /data/certbot/www:/var/www/certbot
     restart: always
+  # certbot:
+  #   image: certbot/certbot
+  #   volumes:
+  #     - /data/certbot/conf:/etc/letsencrypt
+  #     - /data/certbot/www:/var/www/certbot
