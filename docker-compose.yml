@@ -15,8 +15,8 @@ services:
     restart: always
     # expose:
       # - 9200
-    ports:
-      - 9200:9200
+    # ports:
+    #   - 9200:9200
     volumes:
       - /data/elasticsearch:/usr/share/elasticsearch/data
   logstash:
@@ -28,21 +28,22 @@ services:
     environment:
       - "LS_JAVA_OPTS=-Xms4096m -Xmx32768m"
     restart: always
-  # kibana:
-  #   build: kibana
-  #   depends_on:
-  #     - elasticsearch
-  #   restart: always
-  # frontend:
-  #   build: frontend
-  #   ports:
-  #     - 80:80
-  #   # depends_on:
-  #   #   - kibana
-  #   # volumes:
-  #   #   - /data/certbot/conf:/etc/letsencrypt
-  #   #   - /data/certbot/www:/var/www/certbot
-  #   restart: always
+  kibana:
+    build: kibana
+    depends_on:
+      - elasticsearch
+    restart: always
+  frontend:
+    build: frontend
+    ports:
+      - 80:80
+    depends_on:
+      - kibana
+      - elasticsearch
+    # volumes:
+    #   - /data/certbot/conf:/etc/letsencrypt
+    #   - /data/certbot/www:/var/www/certbot
+    restart: always
 
   # certbot:
   #   image: certbot/certbot
