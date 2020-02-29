@@ -1,15 +1,13 @@
 import logging
-import logstash
+# import logstash
 import sys
-import logstash_async
+# import logstash_async
 from logstash_async.handler import AsynchronousLogstashHandler
-
-
 
 logger = logging.getLogger('python-logstash-logger')
 logger.setLevel(logging.INFO)
-# logger.addHandler(logstash.TCPLogstashHandler('0.0.0.0', 9000))
-logger.addHandler(AsynchronousLogstashHandler('0.0.0.0', 9000, database_path=None))
+logger.addHandler(AsynchronousLogstashHandler(
+    '0.0.0.0', 8080, database_path=None))
 
 
 # Logging
@@ -22,4 +20,3 @@ extra = {
     'test_list': [1, 2, '3'],
 }
 logger.info('python-logstash: test extra fields', extra=extra)
-

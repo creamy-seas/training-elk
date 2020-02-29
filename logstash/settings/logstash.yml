@@ -4,6 +4,8 @@ pipeline:
     delay: 100
   workers: 16
 config:
-  debug: true
+  debug: false
 log:
-  level: error
+  level: warn
+node:
+  name: "antonov-logstash"
