@@ -1,0 +1,4 @@
+limits==1.5.1
+pylogbeat==1.0.2
+python-logstash-async==1.6.4
+six==1.14.0
