@@ -3,27 +3,35 @@ import logging
 from logstash_async.handler import AsynchronousLogstashHandler
 from logstash_async.formatter import LogstashFormatter
 
+# 1 - get the logger for logstash #############################################
 logger = logging.getLogger('python-logstash-logger')
 logger.setLevel(logging.INFO)
 
-
-lg_formatter = LogstashFormatter(
-    message_type='execution_analysis',
-    extra_prefix='executiondoc')
+# 2 - create logstash handler #################################################
+# set the host, port, and any ssl values
 lg_handler = AsynchronousLogstashHandler(
     'elkdreams-ai.com', 8080, database_path=None)
-lg_handler.setFormatter(lg_formatter)
 
+# 3 - define formatting options ###############################################
+lg_formatter = LogstashFormatter(
+    message_type='execution_analysis',
+    extra_prefix='custom_data')
+
+# 4 - apply formatting and add the handler ####################################
+lg_handler.setFormatter(lg_formatter)
 logger.addHandler(lg_handler)
 
 
+###############################################################################
+#                                Test requests                             #
+###############################################################################
 extra = {
     'bank': 'ICBC',
+    'bank_account': 'bb56893',
     'function': 'Yelp',
-    'trigger_function': True,
-    'ancestor_functions': ['test1', 'test2', 'test3'],
+    'function_ancestors': ['test1', 'test2', 'test3'],
     'success': True,
-    'account': 'bb56893',
     'clientip': requests.get('http://ip.42.pl/raw').text
 }
-logger.info("Report on failed function", extra=extra)
+logger.error("Report on execution of a bank function", extra=extra)
+print("sensinge")
