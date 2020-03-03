@@ -41,5 +41,6 @@ def run_logger(func):
     def wrapper(*args, **kwargs):
         print('done')
         logger.info("Report on execution of a bank function", extra=extra)
-        return func
+        return_val = func()
+        return return_val
     return wrapper
