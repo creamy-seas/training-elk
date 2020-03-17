@@ -4,8 +4,6 @@ services:
     build: elastic
     environment:
       - "ES_JAVA_OPTS=-Xms4096m -Xmx32768m"
-      - ELASTICSEARCH_USERNAME="creamy-seas"
-      - ELASTICSEARCH_PASSWORD="dreamsAI"
     ulimits:
       nproc: 65535
       nofile:
@@ -15,10 +13,8 @@ services:
         soft: -1
         hard: -1
     restart: always
-    # expose:
-      # - 9200
-    # ports:
-    #   - 9200:9200
+    ports:
+      - 8080:9200
     volumes:
       - /data/elasticsearch:/usr/share/elasticsearch/data
   logstash:
@@ -32,9 +28,6 @@ services:
     restart: always
   kibana:
     build: kibana
-    environment:
-      - ELASTICSEARCH_USERNAME="creamy-seas"
-      - ELASTICSEARCH_PASSWORD="dreamsAI"
     depends_on:
       - elasticsearch
     restart: always
