@@ -7,4 +7,3 @@ cluster:
   name: bank_automation_cluster
 bootstrap:
   memory_lock: true
-script.painless.regex.enabled: true
